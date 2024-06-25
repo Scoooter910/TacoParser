@@ -9,7 +9,7 @@
         
         public ITrackable Parse(string line)
         {
-            logger.LogInfo("Begin parsing");
+           // logger.LogInfo("Begin parsing");
 
             // Take your line and use line.Split(',') to split it up into an array of strings, separated by the char ','
             var cells = line.Split(',');
@@ -24,29 +24,40 @@
             // TODO: Grab the latitude from your array at index 0
             // You're going to need to parse your string as a `double`
             // which is similar to parsing a string as an `int`
-            
-            
+            if (!double.TryParse(cells[0], out double latitude))
+            {
+                logger.LogError($"Invalid latitude format: {cells[0]}");
+                return null;
+            }
+
             // TODO: Grab the longitude from your array at index 1
             // You're going to need to parse your string as a `double`
             // which is similar to parsing a string as an `int`
-            
-            
+            if (!double.TryParse(cells[1], out double longitude))
+            {
+                logger.LogError($"Invalid longitude format: {cells[1]}");
+                return null;
+            }
+
             // TODO: Grab the name from your array at index 2
-            
+            string name = cells[2];
 
             // TODO: Create a TacoBell class
-            // that conforms to ITrackable
-            
+            // that conforms to ITrackable   //done
+
             // TODO: Create an instance of the Point Struct
             // TODO: Set the values of the point correctly (Latitude and Longitude) 
 
-            // TODO: Create an instance of the TacoBell class
-            // TODO: Set the values of the class correctly (Name and Location)
+            // TODO: Create an instance of the TacoBell class 
+            var tacoBell = new TacoBell();
+            tacoBell.Name = name;
+            tacoBell.Location = new Point { Latitude = latitude, Longitude = longitude };
+            // TODO: Set the values of the class correctly (Name and Location) //done
 
             // TODO: Then, return the instance of your TacoBell class,
             // since it conforms to ITrackable
-
-            return null;
+            return tacoBell;
+            
         }
     }
 }
